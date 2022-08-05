@@ -1,4 +1,9 @@
+
+//mongo db coonectivity file
+
 const mongoose = require("mongoose");
+
+
 
 const connectDatabase = () => {
   mongoose
