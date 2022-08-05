@@ -1,18 +1,42 @@
 const express = require('express')
-const cookieParser=require("cookie-parser")
-const bodyParser=require("body-parser")
 const app = express()
 const connectDatabase = require("./config/database");
-const port = 3000
+const port = 4000
 const user=require("../backend/routes/UserRoutes")
 
+// Handling Uncaught Exception
+process.on("uncaughtException", (err) => {
+  console.log(`Error: ${err.message}`);
+  console.log(`Shutting down the server due to Uncaught Exception`);
+  process.exit(1);
+});
 
+
+// Config
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({ path: "backend/config/.env" });
+}
+
+
+
+
+
+//connecting database
 connectDatabase();
-app.use(express.json())
-app.use(express.json());
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
 
+
+const server = app.listen(port, () => {
+  console.log(`Server is working on http://localhost:4000}`);
+});
+// Unhandled Promise Rejection
+process.on("unhandledRejection", (err) => {
+  console.log(`Error: ${err.message}`);
+  console.log(`Shutting down the server due to Unhandled Promise Rejection`);
+
+  server.close(() => {
+    process.exit(1);
+  });
+});
 
 app.get('/', (req, res) => {
   res.json({
@@ -20,8 +44,4 @@ app.get('/', (req, res) => {
     'lastname':"gupta"
 
   })
-})
-app.use("/app/v1", user);
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
 })
