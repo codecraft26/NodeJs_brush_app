@@ -1,6 +1,3 @@
-
-//mongo db coonectivity file
-
 const mongoose = require("mongoose");
 
 
