@@ -7,7 +7,7 @@ const port = 3000
 const user=require("../backend/routes/UserRoutes")
 
 
-connectDatabase();
+connectDatabase();//database connection
 app.use(express.json())
 app.use(express.json());
 app.use(cookieParser());
