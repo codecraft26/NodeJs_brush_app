@@ -15,3 +15,9 @@ app.get('/json', (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+console.log("node js tuts ")
+require("dotenv").config();
+console.log(process.env.NAME);
+console.log(process.env.PROFESSION);
+
